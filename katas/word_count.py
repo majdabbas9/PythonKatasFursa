@@ -12,7 +12,7 @@ def count_words(sentence):
     c = 0
     # punctions doesn't count
     for s in split_sentence_to_words:
-        if s not in [",",".","?","!","(",")",":",";","[","]"]:
+        if s not in [",",".","?","!","(",")",":",";","[","]"] and s[0] +"" not in [",",".","?","!","(",")",":",";","[","]"]:
             c+=1
 
     return c

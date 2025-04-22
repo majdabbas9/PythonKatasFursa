@@ -24,6 +24,15 @@ class TestTrueCount(unittest.TestCase):
     def test_7(self):
         self.assertEqual(count_words("a b c d , e f , g h i ."), 9) 
 
+    def test_8(self):
+        self.assertEqual(count_words("ma , jd"), 2) 
+
+    def test_9(self):
+        self.assertEqual(count_words("hi how are you today ."), 5) 
+
+    def test_10(self):
+        self.assertEqual(count_words("I am fine. , , , ,,,,"), 3)                
+
 
 if __name__ == '__main__':
     unittest.main()

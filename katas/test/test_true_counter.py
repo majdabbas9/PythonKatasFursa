@@ -25,7 +25,13 @@ class TestTrueCount(unittest.TestCase):
         self.assertEqual(count_true_values([False]), 0)
 
     def test_8(self):
-        self.assertEqual(count_true_values([False,False,False,True,True,False,True,False,False,True,True]), 5)    
+        self.assertEqual(count_true_values([False,False,False,True,True,False,True,False,False,True,True]), 5)
+
+    def test_9(self):
+        self.assertEqual(count_true_values([False,False,True,True]), 2) 
+
+    def test_10(self):
+        self.assertEqual(count_true_values([True,True,True,True,True,True,True,True,True,True,False]), 10)                   
 
 
 if __name__ == '__main__':
