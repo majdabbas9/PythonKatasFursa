@@ -15,7 +15,6 @@ def find_difference(numbers):
         min = num if num < min else min
         max = num if num > max else max
     return max - min
-    return 0
 
 
 if __name__ == '__main__':
