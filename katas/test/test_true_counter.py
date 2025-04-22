@@ -1,5 +1,5 @@
 import unittest
-from katas.true_counter import count_true_values
+from katas.true_counte import count_true_values
 
 class TestTrueCount(unittest.TestCase):
 
