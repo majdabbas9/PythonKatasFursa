@@ -1,10 +1,10 @@
 import unittest
-from katas.true_counte import count_true_values
+from katas.true_counter import count_true_values
 
 class TestTrueCount(unittest.TestCase):
 
     def test_1(self):
-        self.assertEqual(count_true_values([True, True, True]), 3)
+        self.assertEqual(count_true_values([True, True, True]),3)
 
     def test_2(self):
         self.assertEqual(count_true_values([False, False, False]), 0)
