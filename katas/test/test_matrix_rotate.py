@@ -1,13 +1,13 @@
 import unittest
 from katas.matrix_rotate import rotate_matrix
-def is_matrcies_equal(m1,m2):
+def is_matrices_equal(m1, m2):
     for i in range(len(m1)):
             for j in range(len(m1[0])):
                 if m1[i][j] != m2[i][j]:
                     return False
     return True            
 
-class TestHelloWorld(unittest.TestCase):
+class Test(unittest.TestCase):
     def test_1(self):
         m = [
         [1, 2, 3],
@@ -20,7 +20,7 @@ class TestHelloWorld(unittest.TestCase):
         [9,6,3]]
         rotate_matrix(m)
 
-        self.assertTrue(is_matrcies_equal(m,mr))
+        self.assertTrue(is_matrices_equal(m, mr))
 
     def test_2(self):
         m = [[1]]
@@ -28,7 +28,7 @@ class TestHelloWorld(unittest.TestCase):
         mr = [[1]]
         rotate_matrix(m)
 
-        self.assertTrue(is_matrcies_equal(m,mr))
+        self.assertTrue(is_matrices_equal(m, mr))
 
     def test_3(self):
         m = [[1,2],
@@ -38,7 +38,7 @@ class TestHelloWorld(unittest.TestCase):
               [4,2]]
         rotate_matrix(m)
 
-        self.assertTrue(is_matrcies_equal(m,mr))
+        self.assertTrue(is_matrices_equal(m, mr))
 
     def test_4(self):
         m = [[1,2,3,4],
@@ -52,7 +52,7 @@ class TestHelloWorld(unittest.TestCase):
               [16,12,8,4]]
         rotate_matrix(m)
 
-        self.assertTrue(is_matrcies_equal(m,mr))
+        self.assertTrue(is_matrices_equal(m, mr))
 
     def test_5(self):
         m = [[1, 2, 3, 4, 5],
@@ -66,7 +66,7 @@ class TestHelloWorld(unittest.TestCase):
               [24, 19, 14, 9, 4],
               [25, 20, 15, 10, 5]]
         rotate_matrix(m)
-        self.assertTrue(is_matrcies_equal(m, mr))
+        self.assertTrue(is_matrices_equal(m, mr))
 
     def test_6(self):
         m = [[1, 2, 3, 4, 5, 6],
@@ -82,7 +82,7 @@ class TestHelloWorld(unittest.TestCase):
               [35, 29, 23, 17, 11, 5],
               [36, 30, 24, 18, 12, 6]]
         rotate_matrix(m)
-        self.assertTrue(is_matrcies_equal(m, mr))
+        self.assertTrue(is_matrices_equal(m, mr))
 
     def test_7(self):
         m = [[1, 2, 3, 4, 5, 6, 7],
@@ -100,6 +100,6 @@ class TestHelloWorld(unittest.TestCase):
               [48, 41, 34, 27, 20, 13, 6],
               [49, 42, 35, 28, 21, 14, 7]]
         rotate_matrix(m)
-        self.assertTrue(is_matrcies_equal(m, mr))
+        self.assertTrue(is_matrices_equal(m, mr))
 
                                     
