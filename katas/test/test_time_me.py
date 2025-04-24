@@ -6,7 +6,7 @@ def test1_func():
     time.sleep(0.5)
 
 def test2_func():
-    print("Hello world")
+    print("Hello world!")
 
 def test3_func():
     time.sleep(1)
