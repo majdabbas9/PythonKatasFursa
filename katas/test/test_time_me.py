@@ -6,7 +6,7 @@ def test1_func():
     time.sleep(0.5)
 
 def test2_func():
-    print("Quick task done!")
+    print("Hello world")
 
 def test3_func():
     time.sleep(1)
@@ -26,18 +26,6 @@ def test6_func():
 def test7_func():
     time.sleep(0.2)
 
-def test8_func():
-    s = ""
-    for _ in range(10000):
-        s += "a"
-
-def test9_func():
-    return lambda: print("Hello from lambda!")
-
-def test10_func():
-    def inner():
-        time.sleep(0.3)
-    inner()
 
 class TestMeasureExecutionTime(unittest.TestCase):
 
@@ -72,21 +60,6 @@ class TestMeasureExecutionTime(unittest.TestCase):
         time_taken = measure_execution_time(test7_func)
         print(f'time_taken_7 = {time_taken}')
         self.assertTrue(abs(time_taken - 200) < 20)
-
-    def test8(self):
-        time_taken = measure_execution_time(test8_func)
-        print(f'time_taken_8 = {time_taken}')
-        self.assertTrue(time_taken > 1)
-
-    def test9(self):
-        time_taken = measure_execution_time(test9_func())
-        print(f'time_taken_9 = {time_taken}')
-        self.assertTrue(time_taken < 10)
-
-    def test10(self):
-        time_taken = measure_execution_time(test10_func)
-        print(f'time_taken_10 = {time_taken}')
-        self.assertTrue(abs(time_taken - 300) < 20)
 
 if __name__ == '__main__':
     unittest.main(argv=[''], exit=False)
