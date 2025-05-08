@@ -13,7 +13,18 @@ def is_valid_parentheses(s):
         True if the string has valid parentheses, False otherwise
     """
     # Hint for efficient implementation: stack
-    return False
+    stack = []
+    map_to_number = {"(":1,")":1,"[":2,"]":2,"{":3,"}":3}
+    for i in range(len(s)):
+        if s[i] in ["(","[","{"]:
+            stack.append(s[i])
+        elif s[i] in [")","]","}"] :
+            n1 = map_to_number[s[i]]
+            n2 = map_to_number[stack[-1]]
+            if n1 != n2 :
+                return False
+            stack.pop()
+    return len(stack)==0
 
 
 if __name__ == '__main__':
