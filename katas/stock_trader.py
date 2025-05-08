@@ -10,7 +10,14 @@ def max_profit(prices):
     Returns:
         the maximum profit, or 0 if no profit can be achieved
     """
-    return 0
+    if len(prices)==0:
+        return 0
+    profit = 0
+    min1 = prices[0]
+    for i in range(1,len(prices)):
+        profit = max(profit,prices[i]-min1)
+        min1 = min(min1,prices[i])
+    return profit
 
 
 if __name__ == '__main__':
@@ -23,4 +30,6 @@ if __name__ == '__main__':
     print(f"Maximum Profit: {max_profit(prices1)}")  # should be 0 (no profit possible)
 
     prices2 = [1, 2, 3, 4, 5]
+    print(f"Maximum Profit: {max_profit(prices2)}")  # should be 4 (buy at 1, sell at 5)
+    prices2 = []
     print(f"Maximum Profit: {max_profit(prices2)}")  # should be 4 (buy at 1, sell at 5)
