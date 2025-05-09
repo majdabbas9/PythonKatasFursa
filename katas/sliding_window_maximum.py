@@ -1,4 +1,8 @@
+from shutil import which
+
+
 def max_sliding_window(nums, k):
+    from collections import deque
     """
     Given an array of integers and a sliding window size, your task is to find the maximum value
     in the window at each position as the window slides from left to right.
@@ -22,7 +26,30 @@ def max_sliding_window(nums, k):
     Returns:
         A list of the maximum values in each window
     """
-    return []
+    if not nums or k==0:
+        return []
+    dq = deque()
+    max_numbers = []
+    for i in range(k):
+        if not dq or nums[i] < nums[dq[-1]]:
+            dq.append(i)
+        else :
+            while dq and nums[i] > nums[dq[-1]]:
+                dq.pop()
+            dq.append(i)
+    for i in range(k,len(nums)):
+        max_numbers.append(nums[dq[0]])
+        if not dq or nums[i] < nums[dq[-1]]:
+            dq.append(i)
+        else :
+            while dq and nums[i] > nums[dq[-1]]:
+                dq.pop()
+            dq.append(i)
+        while dq and i - dq[0] >= k:
+            dq.popleft()
+    if dq:
+        max_numbers.append(nums[dq[0]])
+    return max_numbers
 
 
 if __name__ == '__main__':

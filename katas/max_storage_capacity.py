@@ -1,5 +1,7 @@
 from typing import List
 
+from PIL.ImageOps import contain
+
 
 def max_storage_area(containers: List[int]) -> int:
     """
@@ -21,10 +23,25 @@ def max_storage_area(containers: List[int]) -> int:
     Returns:
         The area of the largest rectangle formed between containers
     """
-    return 0
+    stack = []
+    max_area = 0
+    n = len(containers)
 
+    for i in range(n):
+        while stack and containers[stack[-1]] > containers[i]:
+            left = stack.pop()
+            width = i - (stack[-1] + 1 if stack else 0)
+            max_area = max(max_area, containers[left] * width)
+        stack.append(i)
+
+    while stack:
+        left = stack.pop()
+        width = n - (stack[-1] + 1 if stack else 0)
+        max_area = max(max_area, containers[left] * width)
+
+    return max_area
 
 if __name__ == "__main__":
-    containers = [2, 1, 5, 6, 2, 3]
+    containers = [0,2,0]
     result = max_storage_area(containers)
     print("Max storage area:", result)  # Expected output: 10
