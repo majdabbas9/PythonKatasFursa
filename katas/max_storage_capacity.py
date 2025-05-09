@@ -1,8 +1,4 @@
 from typing import List
-
-from PIL.ImageOps import contain
-
-
 def max_storage_area(containers: List[int]) -> int:
     """
     Imagine a series of storage containers placed side by side, where the height of each container
