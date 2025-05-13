@@ -24,7 +24,33 @@ def select_minimal_test_cases(test_cases: List[List[int]]) -> List[int]:
     Returns:
         A list of indices of the minimal subset of test cases that covers all requirements
     """
-    return []
+    all_requirements = set()
+    for test_case in test_cases:
+        all_requirements.update(test_case)
+
+    num_test_cases = len(test_cases)
+    best_solution = list(range(num_test_cases))
+
+    for size in range(1, num_test_cases + 1):
+        if len(best_solution) < size:
+            break
+        current_combination = [0] * size
+
+        def generate_combinations(pos, start_idx):
+            nonlocal best_solution
+            if pos == size:
+                covered = set()
+                for idx in current_combination:
+                    covered.update(test_cases[idx])
+                if covered == all_requirements and len(current_combination) < len(best_solution):
+                    best_solution = current_combination.copy()
+                return
+            for i in range(start_idx, num_test_cases):
+                current_combination[pos] = i
+                generate_combinations(pos + 1, i + 1)
+        generate_combinations(0, 0)
+        
+    return best_solution
 
 
 if __name__ == "__main__":
