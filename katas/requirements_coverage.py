@@ -1,5 +1,4 @@
-from typing import List
-
+from typing import List,Set
 
 def select_minimal_test_cases(test_cases: List[List[int]]) -> List[int]:
     """
@@ -24,36 +23,41 @@ def select_minimal_test_cases(test_cases: List[List[int]]) -> List[int]:
     Returns:
         A list of indices of the minimal subset of test cases that covers all requirements
     """
-    all_requirements = set()
-    for test_case in test_cases:
-        all_requirements.update(test_case)
+    all_requirements = set(req for case in test_cases for req in case)
+    num_requirements = max(all_requirements)
+    requirements_covered = [0] * num_requirements
+    min_covered = float('inf')
+    current_covered_indices: Set[int] = set()
+    best_indices: List[int] = []
 
-    num_test_cases = len(test_cases)
-    best_solution = list(range(num_test_cases))
+    def backtrack(start: int, requirements_covered_in: List[int], num_selected: int):
+        nonlocal min_covered, best_indices, current_covered_indices
 
-    for size in range(1, num_test_cases + 1):
-        if len(best_solution) < size:
-            break
-        current_combination = [0] * size
+        if all(x > 0 for x in requirements_covered_in):
+            if num_selected < min_covered:
+                min_covered = num_selected
+                best_indices = list(current_covered_indices)
+            return
 
-        def generate_combinations(pos, start_idx):
-            nonlocal best_solution
-            if pos == size:
-                covered = set()
-                for idx in current_combination:
-                    covered.update(test_cases[idx])
-                if covered == all_requirements and len(current_combination) < len(best_solution):
-                    best_solution = current_combination.copy()
-                return
-            for i in range(start_idx, num_test_cases):
-                current_combination[pos] = i
-                generate_combinations(pos + 1, i + 1)
-        generate_combinations(0, 0)
-        
-    return best_solution
+        for i in range(start, len(test_cases)):
+            added = []
+            for req in test_cases[i]:
+                if requirements_covered_in[req - 1] == 0:
+                    added.append(req)
+                requirements_covered_in[req - 1] += 1
+
+            current_covered_indices.add(i)
+            backtrack(i + 1, requirements_covered_in, num_selected + 1)
+            current_covered_indices.remove(i)
+
+            for req in test_cases[i]:
+                requirements_covered_in[req - 1] -= 1
+
+    backtrack(0, requirements_covered, 0)
+    return sorted(best_indices)
 
 
-if __name__ == "__main__":
+def main():
     test_cases = [
         [1, 2, 3],
         [1, 4],
@@ -61,6 +65,9 @@ if __name__ == "__main__":
         [1, 5],
         [3, 5]
     ]
+    arr = [1,2,3,4,5]
 
     result = select_minimal_test_cases(test_cases)
     print(result)  # Expected output: [2, 3]
+if __name__ == "__main__":
+    main()
