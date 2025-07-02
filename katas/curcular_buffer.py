@@ -7,12 +7,9 @@ class CircularBuffer:
     """
 
     def __init__(self, capacity):
-        """
-        Initializes the circular buffer with a fixed capacity.
-
-        Args:
-            capacity: the maximum number of elements the buffer can hold
-        """
+        self.arr = [0] * capacity
+        self.capacity = capacity
+        self.current_added_elements = 0
         pass
 
     def add(self, val):
@@ -22,7 +19,9 @@ class CircularBuffer:
         Args:
             val: the value to add
         """
-        pass
+        self.arr[self.current_added_elements%self.capacity] = val
+        self.current_added_elements += 1
+
 
     def get(self):
         """
@@ -31,6 +30,8 @@ class CircularBuffer:
         Returns:
             the oldest element, or -1 if the buffer is empty
         """
+        if not self.is_empty():
+            return self.arr[self.current_added_elements%self.capacity]
         return -1
 
     def is_full(self):
@@ -40,7 +41,7 @@ class CircularBuffer:
         Returns:
             True if the buffer is full, False otherwise
         """
-        return False
+        return self.current_added_elements >= self.capacity
 
     def is_empty(self):
         """
@@ -49,12 +50,11 @@ class CircularBuffer:
         Returns:
             True if the buffer is empty, False otherwise
         """
-        return False
+        return self.current_added_elements==0
 
 
 if __name__ == '__main__':
     buffer = CircularBuffer(3)
-
     buffer.add(1)
     buffer.add(2)
     buffer.add(3)

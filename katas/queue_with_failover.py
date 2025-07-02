@@ -30,6 +30,9 @@ class QueueWithFailover:
         Args:
             job_timeout: Number of seconds a job is hidden before failing over.
         """
+        self.job_timeout = job_timeout
+        self.visible_jobs = []  # List of jobs that are visible in the queue
+        self.hidden_jobs = {}  # Dictionary to store hidden jobs with their timestamps
         pass
 
     def is_empty(self):
@@ -39,7 +42,7 @@ class QueueWithFailover:
         Returns:
             bool: True if the job queue is empty, False otherwise.
         """
-        pass
+        return len(self.visible_jobs) == 0 and len(self.hidden_jobs) == 0
 
     def send_job(self, job):
         """
@@ -48,7 +51,9 @@ class QueueWithFailover:
         Args:
             job: The job (string) to be added to the queue.
         """
-        pass
+        if not isinstance(job, str):
+            raise TypeError("Job must be a string.")
+        self.visible_jobs.append(job)
 
     def get_job(self):
         """
@@ -60,7 +65,11 @@ class QueueWithFailover:
         Raises:
             EmptyQueueException: If the job queue is empty.
         """
-        raise EmptyQueueException("Not implemented yet.")
+        if self.is_empty():
+            raise EmptyQueueException("The job queue is empty.")
+        job = self.visible_jobs.pop()
+        self.hidden_jobs[job] = time.time()  # Store the job with the current timestamp
+        return job
 
     def job_done(self, job):
         """
@@ -74,7 +83,16 @@ class QueueWithFailover:
         Raises:
             ValueError: If the job is not found in the hidden jobs.
         """
-        raise ValueError("Not implemented yet.")
+        if not isinstance(job, str):
+            raise TypeError("Job must be a string.")
+        current_time = time.time()
+        if job not in self.hidden_jobs:
+            raise ValueError("Job not found in hidden jobs.")
+        if current_time - self.hidden_jobs.get(job) > self.job_timeout:
+            self.visible_jobs.append(job)
+            raise ValueError("Job has expired and cannot be marked as done.")
+        else :
+            del self.hidden_jobs[job]
 
     def size(self):
         """
@@ -83,7 +101,8 @@ class QueueWithFailover:
         Returns:
             int: Number of visible jobs.
         """
-        return -1
+        return len(self.visible_jobs)
+
 
     def in_flight_size(self):
         """
@@ -92,14 +111,19 @@ class QueueWithFailover:
         Returns:
             int: Number of hidden jobs.
         """
-        return -1
+        return len(self.hidden_jobs)
 
     def return_expired_jobs_to_queue(self):
         """
         Return hidden jobs that were retrieved more than `job_timeout` seconds ago
         back to the end of the visible queue.
         """
-        pass
+        current_time = time.time()
+        expired_jobs = [job for job, timestamp in self.hidden_jobs.items()
+                        if current_time - timestamp > self.job_timeout]
+        for job in expired_jobs:
+            self.visible_jobs.append(job)
+            del self.hidden_jobs[job]
 
 
 if __name__ == '__main__':

@@ -1,80 +1,37 @@
 class OrderedMap:
-    """
-    Implement an OrderedMap data structure that behaves like a regular dictionary
-    but maintains the order of keys based on their insertion order.
-
-    IMPORTANT:
-    You MUST NOT use built-in types or libraries that maintain order automatically,
-    such as:
-      - dict (in Python 3.7+)
-      - collections.OrderedDict
-      - any other similar built-in or library.
-
-    Instead, build your own logic to track and maintain insertion order.
-    """
-
     def __init__(self):
-        """
-        Initialize the internal data structures needed to track keys and values
-        while preserving insertion order.
-        """
-        pass
+        self._keys = []
+        self._values = []
 
     def put(self, key, value):
-        """
-        Add a key-value pair to the map.
-        If the key already exists, update its value while preserving the order.
-
-        Args:
-            key: The key to insert.
-            value: The value to associate with the key.
-        """
-        raise NotImplementedError("Not implemented yet.")
+        if key in self._keys:
+            index = self._keys.index(key)
+            self._values[index] = value
+        else:
+            self._keys.append(key)
+            self._values.append(value)
 
     def get(self, key):
-        """
-        Retrieve the value associated with a given key.
-
-        Args:
-            key: The key to look up.
-
-        Returns:
-            The value associated with the key, or None if the key does not exist.
-        """
-        raise NotImplementedError("Not implemented yet.")
+        if key in self._keys:
+            index = self._keys.index(key)
+            return self._values[index]
+        return None
 
     def remove(self, key):
-        """
-        Remove a key-value pair from the map.
-
-        Args:
-            key: The key to remove.
-        """
-        raise NotImplementedError("Not implemented yet.")
+        if key in self._keys:
+            index = self._keys.index(key)
+            del self._keys[index]
+            del self._values[index]
 
     def keys(self):
-        """
-        Return all keys in the order they were added.
-
-        Returns:
-            A list of keys in insertion order.
-        """
-        raise NotImplementedError("Not implemented yet.")
+        return self._keys[:]
 
     def size(self):
-        """
-        Return the number of key-value pairs in the map.
-
-        Returns:
-            int: The number of elements in the map.
-        """
-        raise NotImplementedError("Not implemented yet.")
+        return len(self._keys)
 
     def clear(self):
-        """
-        Remove all key-value pairs from the map.
-        """
-        raise NotImplementedError("Not implemented yet.")
+        self._keys = []
+        self._values = []
 
 
 if __name__ == '__main__':
